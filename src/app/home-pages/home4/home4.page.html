@@ -1,0 +1,177 @@
+<ion-header>
+  <ion-toolbar>
+   
+        <ion-menu-button slot="start" *ngIf="!config.appNavigationTabs">
+      <ion-icon name="menu"></ion-icon>
+    </ion-menu-button>
+    <ion-title>
+      <ion-img src="assets/logo_header.png" alt="logo"></ion-img>
+    </ion-title>
+    <ion-buttons slot="end" *ngIf="!config.appNavigationTabs">
+      <ion-button fill="clear" routerLink="/search" routerDirection="forward">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+	  <ion-button fill="clear" href="https://wa.me/+91{{config.phoneNo}}?text=">
+              <ion-icon slot="icon-only" name="wallet-outline" ios="logo-whatsapp" md="logo-whatsapp"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" routerLink="/cart" routerDirection="forward">
+        <ion-icon name="basket"></ion-icon>
+        <ion-badge color="secondary">{{shared.cartTotalItems()}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-bottom">
+  <app-banner></app-banner>
+  <ion-row class="top-icon-header">
+    <ion-button fill="clear">
+      <ion-icon slot="start" name="apps"></ion-icon>
+      {{'Categories'|translate}}
+    </ion-button>
+  </ion-row>
+  <!-- category avatar -->
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <ion-col *ngFor="let c of shared.categories" (click)="openSubCategories(c)" size="6"
+        class="ion-no-padding animate-item">
+        <ion-card>
+          
+            <img *ngIf="c.image" src="{{config.imgUrl+c.image}}" />
+         
+		    
+          
+		  
+        </ion-card>
+		
+		<ion-text *ngIf="config.categoryLable!='0'">
+            <h4>{{c.name|translate}}</h4>
+            <!--<p>{{c.total_products}} {{'Products'| translate }}</p>-->
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="banner-component" *ngIf="shared.banners2.length>0">
+  <div *ngIf="shared.banners2.length==0">
+    <ion-skeleton-text animated style="height: 211px;">
+    </ion-skeleton-text>
+  </div>
+  <div *ngIf="shared.banners2.length!=0">
+
+    <ion-slides pager="true" [options]="slideOpts" [class]="config.bannerStyle">
+      <ion-slide *ngFor="let b of shared.banners2" class="ion-no-padding animate-item" (click)="bannerClick2(b)">
+        <img src="{{config.imgUrl+b.image}}">
+      </ion-slide>
+    </ion-slides>
+  </div>
+</div>
+  <!-- Flash sale items products -->
+
+  <div class="module" *ngIf="shared.flashSaleProducts.length!=0 ">
+    <ion-row class="top-icon-header">
+      <ion-button fill="clear">
+        <ion-icon slot="start" name="time"></ion-icon>
+        {{'Flash Sale'|translate}}
+      </ion-button>
+    </ion-row>
+    <ion-slides [options]="sliderConfig">
+      <ion-slide *ngFor="let p of shared.flashSaleProducts">
+        <app-product [data]="p" [type]="'flash'"></app-product>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <ion-row class="top-icon-header" *ngIf="config.newestPro!='0'">
+    <ion-button fill="clear">
+      <ion-icon slot="start" name="albums"></ion-icon>
+      {{ 'Newest Products' | translate }}
+    </ion-button>
+  </ion-row>
+  
+  <ion-slides [options]="sliderConfig" *ngIf="config.newestPro!='0'">
+    <ion-slide *ngFor="let p of shared.tab1">
+      <app-product [data]="p" [type]="'normal'"></app-product>
+    </ion-slide>
+    <ion-slide>
+      <ion-button fill="clear" (click)="openProducts('top seller')"> {{'Shop More'| translate}}
+        <ion-icon name="caret-forward"></ion-icon>
+      </ion-button>
+    </ion-slide>
+  </ion-slides>
+ <div class="banner-component" *ngIf="shared.banners3.length>0">
+  <div *ngIf="shared.banners3.length==0">
+    <ion-skeleton-text animated style="height: 211px;">
+    </ion-skeleton-text>
+  </div>
+  <div *ngIf="shared.banners3.length!=0">
+
+    <ion-slides pager="true" [options]="slideOpts" [class]="config.bannerStyle">
+      <ion-slide *ngFor="let b of shared.banners3" class="ion-no-padding animate-item" (click)="bannerClick3(b)">
+        <img src="{{config.imgUrl+b.image}}">
+      </ion-slide>
+    </ion-slides>
+  </div>
+</div>
+  <ion-row class="top-icon-header" *ngIf="config.onsalePro!='0'">
+    <ion-button fill="clear">
+      <ion-icon slot="start" name="bookmark"></ion-icon>
+      {{ 'On Sale Products' | translate }}
+    </ion-button>
+  </ion-row>
+  <ion-slides [options]="sliderConfig" *ngIf="config.onsalePro!='0'">
+    <ion-slide *ngFor="let p of shared.tab2">
+      <app-product [data]="p" [type]="'normal'"></app-product>
+    </ion-slide>
+    <ion-slide>
+      <ion-button fill="clear" (click)="openProducts('special')"> {{'Shop More'| translate}}
+        <ion-icon name="caret-forward"></ion-icon>
+      </ion-button>
+    </ion-slide>
+  </ion-slides>
+ <div class="banner-component" *ngIf="shared.banners4.length>0">
+  <div *ngIf="shared.banners4.length==0">
+    <ion-skeleton-text animated style="height: 211px;">
+    </ion-skeleton-text>
+  </div>
+  <div *ngIf="shared.banners4.length!=0">
+
+    <ion-slides pager="true" [options]="slideOpts" [class]="config.bannerStyle">
+      <ion-slide *ngFor="let b of shared.banners4" class="ion-no-padding animate-item" (click)="bannerClick4(b)">
+        <img src="{{config.imgUrl+b.image}}">
+      </ion-slide>
+    </ion-slides>
+  </div>
+</div>
+  <ion-row class="top-icon-header" *ngIf="config.featPro!='0'">
+    <ion-button fill="clear">
+      <ion-icon slot="start" name="star"></ion-icon>
+      {{ 'Featured Products' | translate }}
+    </ion-button>
+  </ion-row>
+  <ion-slides [options]="sliderConfig" *ngIf="config.featPro!='0'">
+    <ion-slide *ngFor="let p of shared.tab3">
+      <app-product [data]="p" [type]="'normal'"></app-product>
+    </ion-slide>
+    <ion-slide>
+      <ion-button fill="clear" (click)="openProducts('most liked')"> {{'Shop More'| translate}}
+        <ion-icon name="caret-forward"></ion-icon>
+      </ion-button>
+    </ion-slide>
+  </ion-slides>
+  <!-- For Vendor List -->
+  <!--<app-vendor-list></app-vendor-list>-->
+  <!-- recently view Heading -->
+  <ion-row *ngIf="shared.recentViewedProducts.length!=0 && config.recentPro!='0'" class="top-icon-header">
+    <ion-button fill="clear">
+      <ion-icon slot="start" name="list"></ion-icon>
+      {{'Recently Viewed'|translate}}
+    </ion-button>
+  </ion-row>
+  <!-- recently viewed swipe slider -->
+  <ion-slides #recentSlider [options]="sliderConfig" *ngIf="config.recentPro!='0'">
+    <ion-slide *ngFor="let p of shared.recentViewedProducts">
+      <app-product [data]="p" [type]="'recent'"></app-product>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
